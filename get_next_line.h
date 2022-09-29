@@ -22,9 +22,9 @@
 # include <stdio.h>
 
 char	*get_next_line(int fd);
-void	clean_buff(char *buff);
-char	*get_line(char *line, char *buff);
+int		check_line_end(char *buffer);
 int		ft_strlen(char *str);
-int		check_line_end(char *buff);
+char	*get_line(char *line, char *buffer);
+void	ft_clean_buff(char *buffer);
 
 #endif
