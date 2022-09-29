@@ -12,13 +12,23 @@
 
 #include "get_next_line_bonus.h"
 
+int	check_line_end(char *buffer)
+{
+	int	i;
+
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	return (buffer[i] != '\n');
+}
+
 int	ft_strlen(char *str)
 {
 	int	i;
 
+	i = 0;
 	if (!str)
 		return (0);
-	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\n')
@@ -28,68 +38,48 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*get_line(char *line, char *buff)
+char	*get_line(char *line, char *buffer)
 {
+	char	*temp;
 	int		i;
 	int		j;
-	char	*temp;
 
-	i = 0;
-	j = 0;
 	temp = line;
-	line = malloc(sizeof(char) * ft_strlen(buff) + ft_strlen(line) + 1);
+	line = malloc(sizeof(char) * ft_strlen(buffer) + ft_strlen(line) + 1);
 	if (!line)
 		return (NULL);
+	i = 0;
+	j = 0;
 	while (temp && temp[i])
 	{
 		line[i] = temp[i];
 		i++;
-	}
-	while (buff[j])
+	}	
+	while (buffer[j])
 	{
-		line[i + j] = buff[j];
-		if (buff[j++] == '\n')
+		line[i++] = buffer[j];
+		if (buffer[j++] == '\n')
 			break ;
 	}
-	line[i + j] = '\0';
+	line[i] = '\0';
 	if (temp)
 		free(temp);
 	return (line);
 }
 
-void	clean_buff(char *buff)
+void	ft_clean_buff(char *buffer)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (buff[i])
+	j = -1;
+	while (buffer[i])
 	{
-		if (buff[i] == '\n')
-		{
-			buff[i] = 0;
-			i++;
-			break ;
-		}
-		buff[i] = 0;
-		i++;
+		if (j == -1 && buffer[i] == '\n')
+			j = 0;
+		else if (j >= 0)
+			buffer[j++] = buffer[i];
+		buffer[i++] = 0;
 	}
-	j = 0;
-	while (buff[i])
-	{
-		buff[j] = buff[i];
-		buff[i] = 0;
-		i++;
-		j++;
-	}
-}
-
-int	check_line_end(char *buff)
-{
-	int	i;
-
-	i = 0;
-	while (buff[i] && buff[i] != '\n')
-		i++;
-	return (buff[i] != '\n');
 }
