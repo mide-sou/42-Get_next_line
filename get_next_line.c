@@ -14,10 +14,10 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buff[BUFFER_SIZE];
+	static char	buffer[BUFFER_SIZE];
 	char		*line;
 	int			i;
-	int			docsize;	
+	int			docsize;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) == -1)
 		return (0);
@@ -26,12 +26,12 @@ char	*get_next_line(int fd)
 	while (i)
 	{
 		docsize = 1;
-		if (!buff[0])
-			docsize = read(fd, buff, BUFFER_SIZE);
-		i = (check_line_end(buff) && docsize > 0);
+		if (!buffer[0])
+			docsize = read(fd, buffer, BUFFER_SIZE);
+		i = (check_line_end(buffer) && docsize > 0);
 		if (docsize > 0)
-			line = get_line(line, buff);
-		clean_buff(buff);
+			line = get_line(line, buffer);
+		ft_clean_buff(buffer);
 	}
 	return (line);
 }
